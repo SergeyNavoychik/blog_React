@@ -1,0 +1,4 @@
+export const SAVE_ARTICLE = 'SAVE_ARTICLE'
+export const DELETE_ARTICLE = 'DELETE_ARTICLE'
+export const LIKE_ARTICLE = 'LIKE_ARTICLE'
+export const WATCH_ARTICLE = 'WATCH_ARTICLE'
