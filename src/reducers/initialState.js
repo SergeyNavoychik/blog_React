@@ -11,7 +11,7 @@ export default{
                    популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге -
                    нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії
                    Lorem Ipsum.`,
-                createDate: new Date(2017,8,11),
+                createDate: new Date(2014,8,11),
                 countLikes: 0,
                 countWatch: 0,
                 tags: 'blog, news'

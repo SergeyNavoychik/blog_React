@@ -11,7 +11,6 @@ export class SingleArticle extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            isShowPopup: false,
             popup: null
         }
 
@@ -48,7 +47,7 @@ export class SingleArticle extends React.Component{
             browserHistory.push('/blog')
         }
         const cancelPopup = () => {
-            this.setState( { isShowPopup: false } )
+            this.setState( { popup: null } )
         }
         let popup = <div className="alertPopup">
                         <p>Delete article? are you sure??</p>
@@ -57,7 +56,7 @@ export class SingleArticle extends React.Component{
                             <button onClick={cancelPopup}>Cancel</button>
                         </div>
                     </div>
-        this.setState( { popup, isShowPopup: true } )
+        this.setState( { popup } )
     }
     render(){
         let { id, author, title,text,createDate, countLikes, countWatch, tags } = this.props.article,
@@ -69,7 +68,7 @@ export class SingleArticle extends React.Component{
 
         return(
             <div className="container singleArticle">
-                { isShowPopup ? this.state.popup : null }
+                { this.state.popup }
                 <div className="col-md-8">
                     <p className="articleTitle">{ title }</p>
                     < Article
