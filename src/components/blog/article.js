@@ -6,7 +6,7 @@ const Article = ( { author, text, createDate, countLikes, countWatch, tags } ) =
             <div className="articleHeader">
                 <span><i className="fa fa-calendar" />{ createDate.toDateString() }</span>
                 <span><i className="fa fa-user" />{ author }</span>
-                <span><i className="fa fa-heart" />{ countLikes }</span>
+                <span><i className="fa fa-heart" />{ countLikes.counts }</span>
                 <span><i className="fa fa-eye" />{ countWatch }</span>
                 <span><i className="fa fa-tags" />{ tags }</span>
             </div>
@@ -18,7 +18,7 @@ Article.propTypes = {
     author: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired,
     createDate: React.PropTypes.object.isRequired,
-    countLikes: React.PropTypes.number.isRequired,
+    countLikes: React.PropTypes.object.isRequired,
     countWatch: React.PropTypes.number.isRequired,
     tags: React.PropTypes.string.isRequired,
 }

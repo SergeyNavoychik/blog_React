@@ -12,7 +12,7 @@ const FilterArticles = ( { handleChangeFilter, allAuthors } ) => {
                     onChange={ handleChangeFilter }
                     className="selectAuthor"
             >
-                <option value="" default>All authors</option>
+                <option value="allAuthors" default>All authors</option>
                 { allAuthors.map( ( item, i ) => {
                     return <option key={i} value={item} >{ item }</option>
                 } )}

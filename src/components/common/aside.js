@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 const Aside = ( { articles } ) => {
     function mapArticles( article, i ) {
         return(
-            <li key={i}><Link to={`/blog/article/${ article.id }`}>{ article.title }</Link></li>
+            <li key={i}><Link to={`/blog/article/${ article._id }`}>{ article.title }</Link></li>
         )
     }
     return(

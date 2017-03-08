@@ -14,13 +14,13 @@ export class BlogPage extends React.Component{
         this.state = {
             filterArticles: {
                 searchValue: '',
-                sortByAuthor: ''
+                sortByAuthor: 'allAuthors'
             }
         }
-
         this.mapArticles = this.mapArticles.bind(this)
         this.handleChangeFilter = this.handleChangeFilter.bind(this)
         this.filterArticles = this.filterArticles.bind(this)
+        this.sortArticlesForAside = this.sortArticlesForAside.bind(this)
     }
     mapArticles( article, i ){
         return < ItemArticle key={i} article={article} />
@@ -34,16 +34,31 @@ export class BlogPage extends React.Component{
     filterArticles(articles){
         let searchValue = this.state.filterArticles.searchValue.toLowerCase(),
             sortByAuthor = this.state.filterArticles.sortByAuthor
+        articles.forEach( article => {              //convert string Date to Object Date
+            let date = Date.parse(article.createDate)
+            article.createDate = new Date(date)
+        })
         articles.sort( (a, b) => { return b.createDate - a.createDate})  //sort by date
-        articles = articles.filter( article => {
-            return ( article.title.toLowerCase().includes( searchValue ) ||
-                     article.text.toLowerCase().includes( searchValue ) ) } ) //search articles by title and text
-        articles = articles.filter( article => { return article.author.includes( sortByAuthor )}) //sort by author
+        if( searchValue ){
+            articles = articles.filter( article => {                         //search articles by title and text
+                return ( article.title.toLowerCase().includes( searchValue ) ||
+                article.text.toLowerCase().includes( searchValue ) ) } )
+        }
+        if(this.state.filterArticles.sortByAuthor != 'allAuthors'){
+            articles = articles.filter( article => { return article.author == sortByAuthor}) //sort by author
+        }
         return articles
+    }
+    sortArticlesForAside(articlesForAside){
+        articlesForAside.forEach( article => {              //convert string Date to Object Date
+            let date = Date.parse(article.createDate)
+            article.createDate = new Date(date)
+        })
+        articlesForAside.sort( (a, b) => { return b.createDate - a.createDate})
     }
     render(){
         let { articles, isLogin, articlesForAside, arrayAuthors } = this.props
-        articlesForAside.sort( (a, b) => { return b.createDate - a.createDate})
+        this.sortArticlesForAside(articlesForAside)
         articles = this.filterArticles( articles )
         return(
             <div className="container blogPage">
@@ -53,10 +68,8 @@ export class BlogPage extends React.Component{
                 />
                 <div className="content col-md-8">
                     {   articles.length > 0
-                        ?
-                        articles.map( this.mapArticles )
-                        :
-                        <p className="noResults">Sorry, no results were found.</p>
+                        ? articles.map( this.mapArticles )
+                        : <p className="noResults">Sorry, no results were found.</p>
                     }
                 </div>
                 <div className="col-md-4">
@@ -71,7 +84,8 @@ export class BlogPage extends React.Component{
 }
 BlogPage.propTypes = {
   articles: React.PropTypes.arrayOf( React.PropTypes.object ).isRequired,
-  articlesForAside: React.PropTypes.arrayOf( React.PropTypes.object ).isRequired
+  articlesForAside: React.PropTypes.arrayOf( React.PropTypes.object ).isRequired,
+  arrayAuthors: React.PropTypes.array.isRequired
 }
 function mapStateToProps (state) {
     function getAllAuthors( array ) {

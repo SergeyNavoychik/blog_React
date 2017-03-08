@@ -4,7 +4,6 @@ export function logIn() {
     return ( dispatch ) => {
         gapiAuth2.signIn()
             .then( data => {
-                console.log(data)
                 dispatch({
                     type: types.LOGIN_SUCCESS,
                     payload: data

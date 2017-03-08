@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 const ItemArticle = ( {article } ) => {
     return(
        <div className="itemArticle">
-           <Link to={`/blog/article/${ article.id }`}>{ article.title }</Link>
+           <Link to={`/blog/article/${ article._id }`}>{ article.title }</Link>
            <Article id={article.id}
                     author={article.author}
                     title={article.title}
@@ -14,7 +14,7 @@ const ItemArticle = ( {article } ) => {
                     countWatch={article.countWatch}
                     tags={article.tags}
            />
-           <Link to={`/blog/article/${ article.id }`}  className="readMore" > Read more </Link>
+           <Link to={`/blog/article/${ article._id }`}  className="readMore" > Read more </Link>
        </div>
     )
 }

@@ -65,10 +65,10 @@ function randomId( array, id ) {
 }
 function mapStateToProps (state, ownProps) {
     let id = ownProps.params.id,
-        article = { id: randomId(state.blog.articles, 0), author: `${state.user.userName} ${state.user.surname}`,
-                    title:'', text:'', createDate: new Date(), countLikes: 0, countWatch: 0, tags: ''}
+        article = { author: `${state.user.userName} ${state.user.surname}`,
+                    title:'', text:'', createDate: new Date(), countLikes: { counts: 0, names: []}, countWatch: 0, tags: ''}
     if(id){
-       [ article ] = state.blog.articles.filter( article => { return article.id == id })
+       [ article ] = state.blog.articles.filter( article => { return article._id == id })
     }
     return {
         article

@@ -17,15 +17,17 @@ export class SingleArticle extends React.Component{
         this.likeArticle = this.likeArticle.bind(this)
         this.deleteArticle = this.deleteArticle.bind(this)
         this.disableBtn = this.disableBtn.bind(this)
+        this.sortArticlesForAside = this.sortArticlesForAside.bind(this)
     }
     componentWillReceiveProps( nextProps ){
-        if( nextProps.params.id !== this.props.params.id ){
+        if( nextProps.params.id !== this.props.params.id || nextProps.article._id != this.props.article._id){
             this.props.blogAction.watchArticle( nextProps.article )
         }
     }
-    componentWillMount(){
-        this.props.blogAction.watchArticle( this.props.article )
-
+    componentDidMount(){
+        if(this.props.article._id){
+            this.props.blogAction.watchArticle( this.props.article )
+        }
     }
     disableBtn(e){
         let author = `${this.props.user.userName} ${this.props.user.surname}`
@@ -33,8 +35,19 @@ export class SingleArticle extends React.Component{
             e.preventDefault()
         }
     }
-    likeArticle(){
-        this.props.blogAction.likeArticle( this.props.article )
+    likeArticle(e){
+        if( !this.props.user.isLogin ) return false
+        let arrNames = this.props.article.countLikes.namesWhoLike
+        let user = `${this.props.user.userName} ${this.props.user.surname}`
+        if(arrNames.length == 0){
+            this.props.blogAction.likeArticle( this.props.article, user )
+            return false
+        }
+        let userLikeThisArticle = false
+        arrNames.forEach( name => {
+            if( name == user) return userLikeThisArticle = true
+        })
+        if( !userLikeThisArticle) return this.props.blogAction.likeArticle( this.props.article, user )
     }
     deleteArticle(e){
         let author = `${this.props.user.userName} ${this.props.user.surname}`
@@ -58,35 +71,50 @@ export class SingleArticle extends React.Component{
                     </div>
         this.setState( { popup } )
     }
+    sortArticlesForAside(articlesForAside){
+        articlesForAside.forEach( article => {              //convert string Date to Object Date
+            let date = Date.parse(article.createDate)
+            article.createDate = new Date(date)
+        })
+        articlesForAside.sort( (a, b) => { return b.createDate - a.createDate})
+    }
+
     render(){
-        let { id, author, title,text,createDate, countLikes, countWatch, tags } = this.props.article,
-            {isShowPopup} = this.state,
-            { articlesAll } = this.props,
+        let { _id, author, title,text,createDate, countLikes, countWatch, tags } = this.props.article,
+            { articlesAll, fetching } = this.props,
             { isLogin, userName, surname } = this.props.user,
             btnClass = !isLogin || author != `${userName} ${surname}` ? 'disabled' : ''
-        articlesAll.sort( (a, b) => { return b.createDate - a.createDate})
-
+        let date = Date.parse(createDate)
+        createDate = new Date(date)
+        this.sortArticlesForAside(articlesAll)
         return(
             <div className="container singleArticle">
                 { this.state.popup }
-                <div className="col-md-8">
-                    <p className="articleTitle">{ title }</p>
-                    < Article
-                        id={ id }
-                        author={ author }
-                        title={ title }
-                        text={ text }
-                        createDate={ createDate }
-                        countLikes={ countLikes }
-                        countWatch={ countWatch }
-                        tags={ tags }
-                    />
-                    <button onClick={ this.likeArticle } className="likeBtn" ><i className="fa fa-thumbs-up" /></button>
-                </div>
+                { fetching
+                    ? <p className="col-md-8">Fetching....</p>
+                    :
+                    <div className="col-md-8">
+                        <p className="articleTitle">{ title }</p>
+                        < Article
+                            id={ _id }
+                            author={ author }
+                            title={ title }
+                            text={ text }
+                            createDate={ createDate }
+                            countLikes={ countLikes }
+                            countWatch={ countWatch }
+                            tags={ tags }
+                        />
+                        <button onClick={ this.likeArticle }
+                                className={`likeBtn ${ !isLogin && 'disable' }`} >
+                            <i className="fa fa-thumbs-up" />
+                        </button>
+                    </div>
+                }
                 <div className="col-md-4">
                     <div className="controlsBtn">
                         < BtnNewArticle isLogin={isLogin}/>
-                        <Link to={`/blog/updateArticle/${id}`}
+                        <Link to={`/blog/updateArticle/${_id}`}
                               className={ btnClass }
                               onClick={this.disableBtn}>
                               Update article
@@ -111,9 +139,11 @@ SingleArticle.propTypes = {
 }
 function mapStateToProps (state, ownProps) {
     let id = ownProps.params.id,
-        [ article ] = state.blog.articles.filter( article => { return article.id == id })
+        [article] = state.blog.articles.filter( article => { return article._id == id })
+    if(!article) article = {}
     return {
         article,
+        fetching: state.blog.fetching,
         articlesAll: [...state.blog.articles],
         user: state.user
     }

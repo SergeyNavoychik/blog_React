@@ -5,6 +5,7 @@
   "scripts": {
     "prestart": "babel-node tools/startMessage.js",
     "start": "babel-node tools/srcServer.js",
+    "startServerApi": "babel-node tools/serverApi/serverApi.js",
     "open:src": "babel-node tools/srcServer.js",
     "lint": "node_modules/.bin/esw webpack.config.* src tools",
     "lint:watch": "npm run lint -- --watch",
@@ -14,9 +15,13 @@
   "author": "Cory House",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.15.3",
     "babel-polyfill": "6.8.0",
+    "body-parser": "^1.17.1",
     "bootstrap": "3.3.6",
+    "cors": "^2.8.1",
     "jquery": "^2.2.3",
+    "mongoose": "^4.8.6",
     "react": "15.0.2",
     "react-dom": "15.0.2",
     "react-redux": "4.4.5",
