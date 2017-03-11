@@ -7,21 +7,6 @@
     <body>
         <div id="app"></div>
 
-
-        <!--<script>
-             window.onload = function() {
-               console.log(gapiAuth2.isSignedIn.get())
-            }
-             document.addEventListener("load", () => { console.log(gapiAuth2.isSignedIn.get())});
-            document.getElementById("btn").onclick = function(){
-                console.log(gapiAuth2.isSignedIn.get())
-                gapiAuth2.signIn()
-                    .then( data => {
-                        console.log(data)
-                    } )
-
-            }
-        </script>-->
         <script src="https://apis.google.com/js/platform:client.js"></script>
         <script>
             gapi.load('auth2', function() {
@@ -29,10 +14,7 @@
                     client_id: '690861632858-52kvrs8nmhrc580qps0a2cuj5tggamns.apps.googleusercontent.com'
                 });
             });
-
         </script>
-
-
         <script src="/bundle.js"></script>
     </body>
 </html>

@@ -1,15 +1,19 @@
 header
   padding: 15px
-  background: azure
+  background: #000
   nav a
     display: inline-block
     padding: 10px 15px
-    background: aqua
+    font-size: 22px
+    font-weight: 700
+    color: #ffffff
     margin-right: 10px
+    transition: all 1s
     &:hover
       text-decoration: none
+      color: #0D9CFF
     &.active
-      background: salmon
+      color: #0D9CFF
       text-decoration: none
 .user
   display: inline-block
@@ -20,12 +24,16 @@ header
     width: 45px
     height: 45px
   .userHello
-    color: #242424
+    color: #ffffff
     margin-left: 5px
 .btnLog
   padding: 8px
   border: none
   border-radius: 3px
   cursor: pointer
-  color: #242424
+  color: #ffffff
   margin-left: 10px
+  background: #32C4D1
+  transition: all 1s
+  &:hover
+    background: #2674d1

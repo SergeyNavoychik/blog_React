@@ -9,6 +9,6 @@ const ArticleSchema = new Schema({
     createDate: { type: String},
     countLikes: {counts: { type: Number}, namesWhoLike: [ String ] },
     countWatch: { type: Number},
-    tags: { type: String}
+    tags: [ String ]
 })
 const Article = mongoose.model( 'Article', ArticleSchema)

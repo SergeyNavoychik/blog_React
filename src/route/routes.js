@@ -7,6 +7,7 @@ import SingleArticle from '../components/blog/singleArticle'
 import PageNotFound from '../components/common/pageNotFound'
 import EditArticle from '../components/blog/editArticle'
 import Blog from '../components/blog/blog'
+import BlogArticlesByTag from '../components/blog/blogArticlesByTag'
 export const routes = (
     <div>
         <Route path='/' component={ App }>
@@ -14,6 +15,7 @@ export const routes = (
             <Route path={ `/blog` } component={ Blog } >
                 <IndexRoute component={ BlogPage } />
                 <Route path='/blog/article/:id' component={ SingleArticle }/>
+                <Route path='/blog/tag/:tag' component={ BlogArticlesByTag }/>
                 <Route path='/blog/newArticle' component={ EditArticle }/>
                 <Route path='/blog/updateArticle/:id' component={ EditArticle }/>
             </Route>

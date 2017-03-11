@@ -30,6 +30,25 @@
         padding: 0 7px
       i
         margin-right: 5px
+  .tagLink
+    font-size: 11px
+    color: #ffffff
+    background: #cdcacd
+    padding: 3px
+    margin-right: 27px
+    position: relative
+    text-transform: uppercase
+    &:hover
+      text-decoration: none
+    &:after
+      content: ''
+      position: absolute
+      right: -18px
+      bottom: 0
+      border: 9px solid transparent
+      border-left: 9px solid #CDCACD
+.popupTags
+  display: none
 .articleTitle
   font-size: 28px
   text-transform: uppercase
@@ -52,20 +71,6 @@ button.disable
   border: none
   outline: none
   cursor: default
-aside
-  .caption
-    font-style: italic
-    text-transform: uppercase
-  ul
-    list-style: none
-    padding: 0
-    li
-      border-bottom: 1px solid #e2e2e2
-      padding: 5px 0
-      &:before
-        content: '>'
-        margin: 0 10px
-        color: #337ab7
 .alertPopup
   position: fixed
   width: 30%

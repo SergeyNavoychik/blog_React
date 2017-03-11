@@ -3,7 +3,7 @@ import { Link, IndexLink } from 'react-router'
 import User from './user/user'
 const Header = () => {
     return(
-        <header >
+        <header>
             <div className="container">
                 <nav className="col-md-8">
                     < IndexLink to="/" activeClassName="active" > Home </IndexLink>

@@ -4,7 +4,6 @@ export default function ( state = {articles:[], fetching: false}, action) {
 
     switch(action.type){
         case types.SAVE_ARTICLE:
-            console.log(action.payload)
             return {...state, articles: [...state.articles, action.payload]}
         case types.LOAD_ARTICLE:
             return {...state, fetching: true}

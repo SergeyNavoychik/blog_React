@@ -15,7 +15,10 @@ const Input = ( { value, handleChange, error, label, name } ) => {
     )
 }
 Input.propTypes = {
-    value: React.PropTypes.string.isRequired,
+    value: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.arrayOf(React.PropTypes.string)
+    ]),
     name: React.PropTypes.string.isRequired,
     error: React.PropTypes.bool,
     label: React.PropTypes.string.isRequired,

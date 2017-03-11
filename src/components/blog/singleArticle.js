@@ -17,7 +17,6 @@ export class SingleArticle extends React.Component{
         this.likeArticle = this.likeArticle.bind(this)
         this.deleteArticle = this.deleteArticle.bind(this)
         this.disableBtn = this.disableBtn.bind(this)
-        this.sortArticlesForAside = this.sortArticlesForAside.bind(this)
     }
     componentWillReceiveProps( nextProps ){
         if( nextProps.params.id !== this.props.params.id || nextProps.article._id != this.props.article._id){
@@ -71,22 +70,14 @@ export class SingleArticle extends React.Component{
                     </div>
         this.setState( { popup } )
     }
-    sortArticlesForAside(articlesForAside){
-        articlesForAside.forEach( article => {              //convert string Date to Object Date
-            let date = Date.parse(article.createDate)
-            article.createDate = new Date(date)
-        })
-        articlesForAside.sort( (a, b) => { return b.createDate - a.createDate})
-    }
 
     render(){
         let { _id, author, title,text,createDate, countLikes, countWatch, tags } = this.props.article,
-            { articlesAll, fetching } = this.props,
+            { fetching } = this.props,
             { isLogin, userName, surname } = this.props.user,
             btnClass = !isLogin || author != `${userName} ${surname}` ? 'disabled' : ''
         let date = Date.parse(createDate)
         createDate = new Date(date)
-        this.sortArticlesForAside(articlesAll)
         return(
             <div className="container singleArticle">
                 { this.state.popup }
@@ -124,9 +115,7 @@ export class SingleArticle extends React.Component{
                               Delete article
                         </a>
                     </div>
-                    < Aside
-                        articles={ articlesAll.slice( 0, 5 ) }
-                    />
+                    < Aside />
                 </div>
             </div>
         )
@@ -134,8 +123,7 @@ export class SingleArticle extends React.Component{
 }
 SingleArticle.propTypes = {
   article: React.PropTypes.object.isRequired,
-  user: React.PropTypes.object.isRequired,
-  articlesAll: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+  user: React.PropTypes.object.isRequired
 }
 function mapStateToProps (state, ownProps) {
     let id = ownProps.params.id,
@@ -144,7 +132,6 @@ function mapStateToProps (state, ownProps) {
     return {
         article,
         fetching: state.blog.fetching,
-        articlesAll: [...state.blog.articles],
         user: state.user
     }
 }

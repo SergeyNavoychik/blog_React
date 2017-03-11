@@ -3,12 +3,16 @@ import 'bootstrap'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../../node_modules/font-awesome/css/font-awesome.min.css'
 import Header from './common/header'
+import Footer from './common/footer'
 export default class App extends React.Component{
     render(){
         return(
             <div>
                 <Header/>
-                { this.props.children }
+                <div className="mainContent">
+                    { this.props.children }
+                </div>
+                <Footer/>
             </div>
         )
     }

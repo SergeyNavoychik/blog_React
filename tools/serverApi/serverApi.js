@@ -28,7 +28,6 @@ app.put('/articles/countWatch', (req, res) => {
     db.updateCountWatch(req.body).then(data => res.send(data));
 });
 app.put('/articles/countLike', (req, res) => {
-    console.log(req.body)
     db.updateCountLike(req.body).then(data => res.send(data));
 });
 

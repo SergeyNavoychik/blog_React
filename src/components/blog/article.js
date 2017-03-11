@@ -1,6 +1,9 @@
 import React, {PropTypes} from 'react'
 import { Link } from  'react-router'
 const Article = ( { author, text, createDate, countLikes, countWatch, tags } ) => {
+    function mapTags( tag, i ){
+        return <Link to={`/blog/tag/${ tag }`} key={i} className="tagLink">{ tag }</Link>
+    }
     return(
         <div className="articleWrap">
             <div className="articleHeader">
@@ -8,7 +11,10 @@ const Article = ( { author, text, createDate, countLikes, countWatch, tags } ) =
                 <span><i className="fa fa-user" />{ author }</span>
                 <span><i className="fa fa-heart" />{ countLikes.counts }</span>
                 <span><i className="fa fa-eye" />{ countWatch }</span>
-                <span><i className="fa fa-tags" />{ tags }</span>
+                <span><i className="fa fa-tags" />
+                    { tags.slice(0, 3).map( (mapTags))}
+                    {tags.length > 3 && <i>...</i>}
+                </span>
             </div>
             <p className="articleText">{ text }</p>
         </div>
@@ -20,6 +26,6 @@ Article.propTypes = {
     createDate: React.PropTypes.object.isRequired,
     countLikes: React.PropTypes.object.isRequired,
     countWatch: React.PropTypes.number.isRequired,
-    tags: React.PropTypes.string.isRequired,
+    tags: React.PropTypes.array.isRequired,
 }
 export  default Article

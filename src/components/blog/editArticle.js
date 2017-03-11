@@ -22,8 +22,14 @@ export class EditArticle extends React.Component{
     }
     handleChange(e){
         let article = { ...this.state.article }
-        article[e.target.name] = e.target.value
-        this.setState( { article } )
+        if( e.target.name == 'tags'){
+            let arrTags = e.target.value.split(',')
+            this.setState( {article: { ...this.state.article, tags: arrTags }})
+        }
+        else {
+            article[e.target.name] = e.target.value
+            this.setState( { article } )
+        }
     }
     handleSave(){
         let { title, text } = this.state.article
@@ -31,7 +37,9 @@ export class EditArticle extends React.Component{
             this.setState( { ...this.state, error: true } )
             return false
         }
-        let { article } = this.state
+        let article = { ...this.state.article }
+        article.tags = article.tags.filter( tag => { return (tag != '') })
+        article.tags = article.tags.map( tag => tag.trim())
         this.props.blogActions.saveArticle(article)
         browserHistory.push('/blog')
     }
@@ -66,7 +74,7 @@ function randomId( array, id ) {
 function mapStateToProps (state, ownProps) {
     let id = ownProps.params.id,
         article = { author: `${state.user.userName} ${state.user.surname}`,
-                    title:'', text:'', createDate: new Date(), countLikes: { counts: 0, names: []}, countWatch: 0, tags: ''}
+                    title:'', text:'', createDate: new Date(), countLikes: { counts: 0, names: []}, countWatch: 0, tags: []}
     if(id){
        [ article ] = state.blog.articles.filter( article => { return article._id == id })
     }
