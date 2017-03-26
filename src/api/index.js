@@ -1,5 +1,8 @@
 import axios from 'axios'
 export default{
+    uploadImage(data, config) {
+        return axios.post( 'http://localhost:8080/uploadphoto', data, config)
+    },
     listArticles(){
         return axios.get( 'http://localhost:8080/articles')
     },

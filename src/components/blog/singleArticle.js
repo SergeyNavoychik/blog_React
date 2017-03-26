@@ -72,7 +72,7 @@ export class SingleArticle extends React.Component{
     }
 
     render(){
-        let { _id, author, title,text,createDate, countLikes, countWatch, tags } = this.props.article,
+        let { _id, author, title,text,createDate, countLikes, countWatch, tags, imageURL } = this.props.article,
             { fetching } = this.props,
             { isLogin, userName, surname } = this.props.user,
             btnClass = !isLogin || author != `${userName} ${surname}` ? 'disabled' : ''
@@ -95,6 +95,7 @@ export class SingleArticle extends React.Component{
                             countLikes={ countLikes }
                             countWatch={ countWatch }
                             tags={ tags }
+                            imageURL={imageURL}
                         />
                         <button onClick={ this.likeArticle }
                                 className={`likeBtn ${ !isLogin && 'disable' }`} >

@@ -1,5 +1,5 @@
 import * as types from '../constants/blog'
-//import initialState  from './initialState'
+
 export default function ( state = {articles:[], fetching: false}, action) {
 
     switch(action.type){

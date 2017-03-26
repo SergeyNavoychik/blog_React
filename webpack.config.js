@@ -33,9 +33,10 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.js$/, include: path.join(__dirname, 'src'), loaders: ['babel']},
-            {test: /(\.css)$/, loaders: ['style', 'css']},
-            {test: /\.sass$/,loaders: ['style', 'css', 'sass']},
+            {test: /(\.css)$/, loader: ExtractTextPlugin.extract('style',[ 'css'])},
+            {test: /\.sass$/,loader: ExtractTextPlugin.extract('style',[ 'css', 'sass'])},
             {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader?mimetype=image/svg+xml'},
+            { test: /\.(png|jpg|jpeg|gif|woff)$/, loader: 'url-loader?limit=8192' },
             {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/font-woff"},
             {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/font-woff"},
             {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/octet-stream"},

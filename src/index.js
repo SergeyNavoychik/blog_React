@@ -9,7 +9,6 @@ import { loadArticles } from './actions/blogAction'
 
 const store = configureStore()
 store.dispatch(loadArticles())
-
 ReactDOM.render(
     <Provider store={ store }>
         <Router history={ browserHistory } routes={ routes }/>

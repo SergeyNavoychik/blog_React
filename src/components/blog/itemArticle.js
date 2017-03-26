@@ -13,6 +13,7 @@ const ItemArticle = ( {article } ) => {
                     countLikes={article.countLikes}
                     countWatch={article.countWatch}
                     tags={article.tags}
+                    imageURL={article.imageURL}
            />
            <Link to={`/blog/article/${ article._id }`}  className="readMore" > Read more </Link>
        </div>

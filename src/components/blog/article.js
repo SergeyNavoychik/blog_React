@@ -1,8 +1,12 @@
 import React, {PropTypes} from 'react'
 import { Link } from  'react-router'
-const Article = ( { author, text, createDate, countLikes, countWatch, tags } ) => {
+import noImg from "../../img/noimage.jpeg"
+const Article = ( { author, text, createDate, countLikes, countWatch, tags, imageURL } ) => {
     function mapTags( tag, i ){
         return <Link to={`/blog/tag/${ tag }`} key={i} className="tagLink">{ tag }</Link>
+    }
+    function setUrl(e) {
+        return e.target.src = noImg
     }
     return(
         <div className="articleWrap">
@@ -16,7 +20,12 @@ const Article = ( { author, text, createDate, countLikes, countWatch, tags } ) =
                     {tags.length > 3 && <i>...</i>}
                 </span>
             </div>
-            <p className="articleText">{ text }</p>
+            <p className="articleText">
+                <img src={imageURL}
+                     className="articleImg"
+                     onError={setUrl}/>
+                { text }
+            </p>
         </div>
     )
 }

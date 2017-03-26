@@ -4,7 +4,7 @@ import  './articles'
 const Article = mongoose.model( 'Article')
 mongoose.Promise = Promise
 export  function setUpConnection() {
-    mongoose.connect(`mongodb://127.0.0.1/blog`)
+    mongoose.connect('mongodb://localhost/blog')
 }
 
 export function listArticles() {
@@ -18,7 +18,8 @@ export function createArticle(data) {
         createDate: data.createDate,
         countLikes: { counts: data.countLikes.counts, namesWhoLike: data.countLikes.names },
         countWatch: data.countWatch,
-        tags: data.tags
+        tags: data.tags,
+        imageURL: data.imageURL
     })
     return article.save()
 }
@@ -31,6 +32,7 @@ export function updateArticle(data) {
         article.countLikes = data.countLikes
         article.countWatch = data.countWatch
         article.tags = data.tags
+        article.imageURL = data.imageURL
         article.save();
     })
 }
@@ -47,7 +49,6 @@ export function updateCountLike(data) {
         article.save();
     })
 }
-
 
 export function deleteArticle(noteId) {
     return Article.findById(noteId).remove()

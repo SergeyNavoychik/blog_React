@@ -2,6 +2,14 @@ import * as types from  '../constants/blog'
 import api from '../api/index'
 
 
+export function uploadImage(data, config, article) {
+    return (dispatch) => {
+        api.uploadImage( data, config ).then( ( result ) => {
+            console.log(result.data)
+        } )
+    }
+}
+
 export function loadArticles() {
 
     return (dispatch) => {
@@ -13,28 +21,42 @@ export function loadArticles() {
                 type: types.LOAD_ARTICLE_SUCCESS,
                 payload: result.data
             })
-            console.log("load")
         } )
     }
 }
 
-export function saveArticle(article) {
+export function saveArticle(article, fileData, config) {
     return(dispatch) => {
         if(article._id){
-            api.updateArticle(article).then( () => {
-                dispatch({
-                    type: types.UPDATE_ARTICLE,
-                    payload: article
+            if ( fileData ){
+                api.uploadImage( fileData, config ).then( ( { data } ) => {
+                    let articleNew = { ...article, imageURL: data }
+                    api.updateArticle( articleNew ).then( () => {
+                        dispatch({
+                            type: types.UPDATE_ARTICLE,
+                            payload: articleNew
+                        })
+                    })
+                } )
+            }
+            else {
+                api.updateArticle(article).then( () => {
+                    dispatch({
+                        type: types.UPDATE_ARTICLE,
+                        payload: article
+                    })
                 })
-            })
+            }
         }
         else{
-            api.createArticle(article).then( ( result ) => {
-                dispatch({
-                    type: types.SAVE_ARTICLE,
-                    payload: result.data
+            api.uploadImage( fileData, config ).then( ( { data } ) => {
+                api.createArticle({ ...article, imageURL: data }).then( ( result ) => {
+                    dispatch({
+                        type: types.SAVE_ARTICLE,
+                        payload: result.data
+                    })
                 })
-            })
+            } )
         }
     }
 }
@@ -52,8 +74,7 @@ export function deleteArticle(article) {
 }
 export function likeArticle(article, user) {
     return(dispatch) => {
-        api.updateCountLike( { article, user } ).then( (res) => {
-            console.log(res)
+        api.updateCountLike( { article, user } ).then( () => {
             dispatch({
                 type: types.LIKE_ARTICLE,
                 payload: {

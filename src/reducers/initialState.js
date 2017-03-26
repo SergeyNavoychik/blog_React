@@ -55,6 +55,3 @@ export default{
         isLogin: false
     }
 }
-//690861632858-52kvrs8nmhrc580qps0a2cuj5tggamns.apps.googleusercontent.com IDclient
-//voXjZbPjLNPLV5fj16zdEn5J secretClient
-//AIzaSyBv499pALQ3SdpfqPXG5GGgtRDcmiAbtvA API key
