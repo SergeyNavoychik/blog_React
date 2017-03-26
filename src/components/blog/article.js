@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react'
 import { Link } from  'react-router'
-import noImg from "../../img/noimage.jpeg"
 const Article = ( { author, text, createDate, countLikes, countWatch, tags, imageURL } ) => {
+    let defaultImg = "http://res.cloudinary.com/djssacg3i/image/upload/v1490557820/noimage_rus4n0.jpg"
     function mapTags( tag, i ){
         return <Link to={`/blog/tag/${ tag }`} key={i} className="tagLink">{ tag }</Link>
     }
     function setUrl(e) {
-        return e.target.src = noImg
+        return e.target.src = defaultImg
     }
     return(
         <div className="articleWrap">
@@ -21,7 +21,7 @@ const Article = ( { author, text, createDate, countLikes, countWatch, tags, imag
                 </span>
             </div>
             <p className="articleText">
-                <img src={imageURL}
+                <img src={imageURL || defaultImg }
                      className="articleImg"
                      onError={setUrl}/>
                 { text }

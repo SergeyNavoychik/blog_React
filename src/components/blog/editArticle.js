@@ -31,7 +31,8 @@ export class EditArticle extends React.Component{
         }
         if (file) {
             reader.readAsDataURL(file)
-        } else {
+        }
+        else {
             this.setState( { previewImg: '' })
         }
     }
@@ -46,11 +47,23 @@ export class EditArticle extends React.Component{
             this.setState( { article } )
         }
         if( e.target.name == 'image' ){
+            /* upload in folder
             const config = { headers: { 'Content-Type': 'multipart/form-data' } };
             let fileData = new FormData();
             fileData.append("image", e.target.files[0]);
             this.setState( { imageData: { config, fileData }, article: { ...this.state.article, imageURL: '' } })
-            this.previewImg()
+            this.previewImg()*/
+
+            //upload on Cloudinary
+            let file = document.querySelector('#uploadImage').files[0]
+            let reader = new FileReader();
+            reader.onloadend = () => {
+                this.setState( { imageData: { imageURL: reader.result }, article: { ...this.state.article, imageURL: '' } } )
+                this.previewImg()
+            }
+            if (file) {
+                reader.readAsDataURL(file)
+            }
         }
     }
     handleSave(){
@@ -60,10 +73,11 @@ export class EditArticle extends React.Component{
             return false
         }
         let article = { ...this.state.article }
-        let { config = {}, fileData = false} = this.state.imageData
+        let imageData = this.state.imageData
+        //let { config = {}, fileData = false} = this.state.imageData
         article.tags = article.tags.map( tag => tag.trim())
         article.tags = article.tags.filter( tag => { return (tag != '') })
-        this.props.blogActions.saveArticle(article, fileData, config)
+        this.props.blogActions.saveArticle(article, imageData)
         browserHistory.push('/blog')
     }
     render(){
@@ -85,16 +99,6 @@ EditArticle.propTypes = {
     article: React.PropTypes.object.isRequired
 }
 
-function randomId( array, id ) {
-
-    for (var i = 0; i < array.length; i++) {
-        if( array[i].id == id ){
-            ++id
-            i = -1
-        }
-    }
-    return id
-}
 function mapStateToProps (state, ownProps) {
     let id = ownProps.params.id,
         article = { author: `${state.user.userName} ${state.user.surname}`,

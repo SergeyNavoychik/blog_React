@@ -1,7 +1,11 @@
 import axios from 'axios'
 export default{
+    /* upload in folder
     uploadImage(data, config) {
         return axios.post( 'http://localhost:8080/uploadphoto', data, config)
+    },*/
+    uploadImage(data) {
+        return axios.post( 'http://localhost:8080/uploadimage', data)
     },
     listArticles(){
         return axios.get( 'http://localhost:8080/articles')

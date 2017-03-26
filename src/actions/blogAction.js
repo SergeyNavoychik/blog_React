@@ -25,11 +25,11 @@ export function loadArticles() {
     }
 }
 
-export function saveArticle(article, fileData, config) {
+export function saveArticle( article, imageData ) {
     return(dispatch) => {
         if(article._id){
-            if ( fileData ){
-                api.uploadImage( fileData, config ).then( ( { data } ) => {
+            if ( imageData ){
+                api.uploadImage( imageData ).then( ( { data } ) => {
                     let articleNew = { ...article, imageURL: data }
                     api.updateArticle( articleNew ).then( () => {
                         dispatch({
@@ -49,7 +49,7 @@ export function saveArticle(article, fileData, config) {
             }
         }
         else{
-            api.uploadImage( fileData, config ).then( ( { data } ) => {
+            api.uploadImage( imageData ).then( ( { data } ) => {
                 api.createArticle({ ...article, imageURL: data }).then( ( result ) => {
                     dispatch({
                         type: types.SAVE_ARTICLE,

@@ -4,6 +4,8 @@ import cors from 'cors'
 import multer from 'multer'
 import * as db from './db/dbUtils'
 import path from 'path';
+import cloudinary from 'cloudinary'
+
 
 // Initialization of express application
 const app = express();
@@ -12,12 +14,13 @@ const app = express();
 db.setUpConnection();
 
 // Using bodyParser middleware
-app.use( bodyParser.json() );
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 // Allow requests from any origin
 app.use(cors({ origin: '*' }));
 
-//Upload image
-var storage = multer.diskStorage({
+//Upload image in folder on server
+/*var storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, path.join( __dirname, './photos'));
     },
@@ -39,9 +42,23 @@ app.post('/uploadphoto',(req,res) => {
 
 app.get('/photos/:name', (req, res) => {
     res.sendfile(path.join( __dirname, `./photos/${req.params.name}`))
+});*/
+//end upload image
+
+//upload image on Cloudinary
+cloudinary.config({
+    cloud_name: 'djssacg3i',
+    api_key: '425636787338851',
+    api_secret: 'JBtcNpCbYwUkpcu9tQ-59FkrySw'
+})
+
+app.post('/uploadimage',(req,res) => {
+    cloudinary.uploader.upload(req.body.imageURL,
+        function(result) {res.send(result.url)});
 });
 
 //end upload image
+
 
 // RESTful api handlers
 app.get('/articles', (req, res) => {
